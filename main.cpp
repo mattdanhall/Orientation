@@ -17,8 +17,7 @@ void printDebug(std::string string) {
     }
 }
 
-int main(int c, char **v) {
-
+void terminalApp(){
     printDebug("BEGIN\n");
     printDebug("Active connectors surrounding module: 0b" + std::bitset<6>(connection::activeConnectors).to_string()
                + " " + connection::facesToString(connection::activeConnectors) + "\n\n");
@@ -37,7 +36,7 @@ int main(int c, char **v) {
                + " " + connection::facesToString(currentMaxConnections) + "\n");
     int currentAvailConnections = connection::checkConnectivity(currentOrientation);
     printDebug("Available connections: 0b" + std::bitset<6>(currentAvailConnections).to_string()
-              + " " + connection::facesToString(currentAvailConnections) + "\n\n");
+               + " " + connection::facesToString(currentAvailConnections) + "\n\n");
 
     std::cout << "[INIT] Please enter the desired orientation: ";
     std::cin >> desiredString;
@@ -55,4 +54,8 @@ int main(int c, char **v) {
     if(!path.empty()){
         transition::printTransition(path);
     }
+}
+
+int main(int c, char **v) {
+    terminalApp();
 };
