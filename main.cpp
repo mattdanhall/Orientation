@@ -12,11 +12,19 @@ std::vector<int> path;
 
 void terminalApp(){
     std::cout << "[DBUG] BEGIN\n";
-    std::cout << "[CNCT] Active connectors surrounding module: 0b" + std::bitset<6>(connection::activeConnectors).to_string()
-               + " " + connection::facesToString(connection::activeConnectors) + "\n\n";
+    std::cout << "[INIT] Which connectors are active? ";
+    std::cin >> connection::activeConnectors;
+    std::cout << "[CNCT] Active connectors surrounding module: 0b" + std::bitset<6>(connection::activeConnectors).to_string() +
+            " " + connection::facesToString(connection::activeConnectors) + "\n\n";
 
     std::cout << "[INIT] Please enter the initial orientation: ";
     std::cin >> currentString;
+
+    if(currentString=="ALL"){
+        transition::checkAll();
+    }else if(currentString=="FILE"){
+        transition::makeFile();
+    }
 
     int currentOrientation = orientation::convertOrientation(currentString);
 
@@ -44,13 +52,13 @@ void terminalApp(){
 };
 
 int main(int c, char **v) {
-    std::string str = v[1];
-    if(str=="--test"){
-        terminalApp();
-    } else if(str=="--file"){
-        transition::makeFile();
-    } else if(str=="--all"){
-        transition::checkAll();
+//    std::string str = v[1];
+    if(c > 1){
+        if(std::string(v[1])=="--test"){
+            terminalApp();
+        } else {
+            std::cout << "/////// Invalid argument provided (try --test) ///////\n";
+        }
     } else {
         std::cout << "/////// No argument provided (try --test) ///////\n";
     }
