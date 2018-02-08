@@ -121,7 +121,6 @@ public:
     static const int symmetryInversion[36][36];
 
     // Returns a message if control inversion is required
-    // SIMPLE FUNCTION, REMOVE?
     static bool checkSymmetry(int current, int desired);
 
     // Converts an integer representation of orientation to a string for output to user

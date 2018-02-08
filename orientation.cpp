@@ -127,7 +127,6 @@ const int orientation::symmetryInversion[36][36] = {
 };
 
 // Returns a message if control inversion is required
-// SIMPLE FUNCTION, REMOVE?
 bool orientation::checkSymmetry(int current, int desired) {
     if(symmetryInversion[current][desired]) {
         std::cout << "[CTRL] Controller inversion required\n";

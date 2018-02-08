@@ -192,10 +192,11 @@ void transition::checkAll() {
 // Creates files of path lengths for debugging and testing
 void transition::makeFile() {
     for(int b = 1; 0b111111 >= b; b++){
-        int max = 1;
+        int maxPathLength = 1;
+        int possibleTransitions=0;
         std::vector<int> maxPath;
         connection::activeConnectors=b;
-        std::string fileName = connection::facesToString(connection::activeConnectors)+".txt";
+        std::string fileName = "./PathLengths/"+connection::facesToString(connection::activeConnectors)+".txt";
         std::ofstream myFile (fileName);
         if(myFile.is_open()) {
             std::cout << fileName << " created\n";
@@ -214,8 +215,9 @@ void transition::makeFile() {
                         std::vector<int> path = getTransition(i, j);
                         if (!path.empty()) {
                             myFile << path.size()-1 << "  ";
-                            if((path.size()-1)>max){
-                                max = (path.size()-1);
+                            possibleTransitions++;
+                            if((path.size()-1)>maxPathLength){
+                                maxPathLength = (path.size()-1);
                                 maxPath = path;
                             }
                         } else {
@@ -228,7 +230,7 @@ void transition::makeFile() {
                 }
                 myFile << "\n";
             }
-            myFile << "\nMaximum path length = " << max << "\n";
+            myFile << "\nMaximum path length = " << maxPathLength << "\n";
             for(int k = 0; k < maxPath.size(); k++) {
                 myFile << "Orientation: " << orientation::orientToString(maxPath[k]) << "\n";
                 if(k+1 < maxPath.size()){
@@ -238,11 +240,12 @@ void transition::makeFile() {
                     }
                 }
             }
+            myFile << "\n\nPossible transitions: " << possibleTransitions;
             myFile.close();
         }
-        std::ofstream maxFile ("Maximum.txt", std::ios::app);
+        std::ofstream maxFile ("./PathLengths/Maximum.txt", std::ios::app);
         if(maxFile.is_open()){
-            maxFile << connection::facesToString(connection::activeConnectors) << "= " << max << "\n";
+            maxFile << connection::facesToString(connection::activeConnectors) << "= " << maxPathLength << "\n";
         }
         maxFile.close();
     }
