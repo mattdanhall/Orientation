@@ -180,16 +180,24 @@ void transition::printTransition(std::vector<int> path) {
 
 // Outputs the transition as images
 void transition::showTransition(std::vector<int> path) {
+    if(path.empty()){
+        return;
+    }
     Magick::Image image;
     Magick::Image transitions;
     transitions.size(Magick::Geometry(200*path.size(),200));
     for(int i=0; i < path.size(); i++){
-        std::string inName = "./Images/"+orientation::orientToString(path[i])+".png";
-        image.read(inName);
-        image.label();
+        std::string inName = orientation::orientToString(path[i]);
+        image.read("../Images/"+inName+".png");
+        image.font("Times-New-Roman");
+        image.density( "72x72" );
+        image.fontPointsize( 12 );
+        image.fillColor( "black" );
+        image.annotate(inName,"+0-20", Magick::NorthGravity);
         transitions.composite(image, i*200, 0, Magick::OverCompositeOp);
     }
-    transitions.write("./ImageOutput/transitions.png");
+    std::string transitionName = orientation::orientToString(path[0])+"_to_"+orientation::orientToString(path[path.size()-1])+".png";
+    transitions.write("../ImageOutput/"+transitionName);
     transitions.display();
 };
 
@@ -211,7 +219,7 @@ void transition::makeFile() {
         int possibleTransitions=0;
         std::vector<int> maxPath;
         connection::activeConnectors=b;
-        std::string fileName = "./PathLengths/"+connection::facesToString(connection::activeConnectors)+".txt";
+        std::string fileName = "../PathLengths/"+connection::facesToString(connection::activeConnectors)+".txt";
         std::ofstream myFile (fileName);
         if(myFile.is_open()) {
             std::cout << fileName << " created\n";
@@ -258,7 +266,7 @@ void transition::makeFile() {
             myFile << "\n\nPossible transitions: " << possibleTransitions;
             myFile.close();
         }
-        std::ofstream maxFile ("./PathLengths/Maximum.txt", std::ios::app);
+        std::ofstream maxFile ("../PathLengths/Maximum.txt", std::ios::app);
         if(maxFile.is_open()){
             maxFile << connection::facesToString(connection::activeConnectors) << "= " << maxPathLength << "\n";
         }

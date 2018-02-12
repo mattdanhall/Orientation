@@ -65,15 +65,18 @@ const int connection::maxConnectivity[36] = {
 // Returns the number of active connectors surrounding a module
 int connection::activeConnectors = {
 //        BACK | DOWN
-//        getRandomConnectors()
-        getDefinedConnectors()
+        getRandomConnectors()
+//        getDefinedConnectors()
 };
 
 
 // Obtains a random number of connectors for testing etc.
 const int connection::getRandomConnectors() {
     srand((int) time(0));
-    return rand()%63;
+    int connectors = rand()%63;
+    std::cout << "[CNCT] Active connectors surrounding module: 0b" + std::bitset<6>(connectors).to_string() +
+                 " " + facesToString(connectors) + "\n\n";
+    return connectors;
 };
 
 const int connection::getDefinedConnectors() {
