@@ -43,8 +43,8 @@ void terminalApp(){
                + " " + connection::facesToString(desiredAvailConnections) + "\n";
 
     path = transition::getTransition(currentOrientation, desiredOrientation);
-    transition::printTransition(path);
-    transition::showTransition(path);
+    transition::textOfTransition(path);
+    transition::imageOfTransition(path);
 };
 
 int main(int c, char **v) {

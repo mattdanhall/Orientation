@@ -21,10 +21,10 @@ public:
 
     // Outputs the transition to console
     // Displays the orientations and connections needed between each orientation
-    static void printTransition(std::vector<int> path);
+    static void textOfTransition(std::vector<int> path);
 
     // Outputs the transition as images
-    static void showTransition(std::vector<int> path);
+    static void imageOfTransition(std::vector<int> path);
 
     // Checks the transitions between all states for debugging and testing
     static void checkAll();

@@ -163,7 +163,7 @@ std::vector<int> transition::getTransition(int current, int desired) {
 
 // Outputs the transition to console
 // Displays the orientations and connections needed between each orientation
-void transition::printTransition(std::vector<int> path) {
+void transition::textOfTransition(std::vector<int> path) {
     if(path.empty()){
         std::cout << "\n[RSLT] No translation possible\n";
     } else {
@@ -179,25 +179,40 @@ void transition::printTransition(std::vector<int> path) {
 };
 
 // Outputs the transition as images
-void transition::showTransition(std::vector<int> path) {
+void transition::imageOfTransition(std::vector<int> path) {
     if(path.empty()){
         return;
     }
     Magick::Image image;
+    Magick::Image control;
     Magick::Image transitions;
+    Magick::Image connectors;
     transitions.size(Magick::Geometry(200*path.size(),200));
     for(int i=0; i < path.size(); i++){
         std::string inName = orientation::orientToString(path[i]);
-        image.read("../Images/"+inName+".png");
-        image.font("Times-New-Roman");
-        image.density( "72x72" );
-        image.fontPointsize( 12 );
-        image.fillColor( "black" );
-        image.annotate(inName,"+0-20", Magick::NorthGravity);
+        image.read("../Images/Orientations/"+inName+".png");
+        image.font("helvetica-oblique");
+        image.annotate(inName,"+0-15", Magick::SouthGravity);
         transitions.composite(image, i*200, 0, Magick::OverCompositeOp);
+        if(i!=0){
+            if(orientation::symmetryInversion[path[i-1]][path[i]]){
+                control.read("../Images/Invert control.png");
+            } else {
+                control.read("../Images/Normal control.png");
+            }
+            transitions.composite(control, (i*200)-50, 50, Magick::OverCompositeOp);
+            std::string connectorName = connection::facesToString(orientation::orientationTransitions[path[i-1]][path[i]]&connection::activeConnectors);
+            connectors.read("../Images/Connectors/"+connectorName+".png");
+            connectors.annotate(connectorName, "+0-15", Magick::SouthGravity);
+            connectors.resize("50x50");
+            transitions.composite(connectors, (i*200)-25, 115, Magick::OverCompositeOp);
+        }
     }
-    std::string transitionName = orientation::orientToString(path[0])+"_to_"+orientation::orientToString(path[path.size()-1])+".png";
-    transitions.write("../ImageOutput/"+transitionName);
+    transitions.font("helvetica-regular");
+    transitions.annotate("Active connectors: "+connection::facesToString(connection::activeConnectors), "+0-15", Magick::NorthGravity);
+    std::string transitionName = connection::facesToString(connection::activeConnectors)+orientation::orientToString(path[0])
+                                 +" "+orientation::orientToString(path[path.size()-1]);
+    transitions.write("../ImageOutput/"+transitionName+".png");
     transitions.display();
 };
 
@@ -206,7 +221,7 @@ void transition::checkAll() {
     for(int i = 0; i < 36; i++) {
         for (int j = (i+1); j < 36; j++) {
             std::vector<int> path = getTransition(i, j);
-            printTransition(path);
+            textOfTransition(path);
         }
     }
     exit(0);
