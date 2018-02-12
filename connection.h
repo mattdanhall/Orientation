@@ -35,6 +35,9 @@ public:
     // Obtains a random number of connectors for testing etc.
     static const int getRandomConnectors();
 
+    // Requests the connectors from the user
+    static const int getDefinedConnectors();
+
     // Returns the number of active connectors that the current orientation has
     static int checkConnectivity(int orientation);
 

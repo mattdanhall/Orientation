@@ -178,6 +178,21 @@ void transition::printTransition(std::vector<int> path) {
     }
 };
 
+// Outputs the transition as images
+void transition::showTransition(std::vector<int> path) {
+    Magick::Image image;
+    Magick::Image transitions;
+    transitions.size(Magick::Geometry(200*path.size(),200));
+    for(int i=0; i < path.size(); i++){
+        std::string inName = "./Images/"+orientation::orientToString(path[i])+".png";
+        image.read(inName);
+        image.label();
+        transitions.composite(image, i*200, 0, Magick::OverCompositeOp);
+    }
+    transitions.write("./ImageOutput/transitions.png");
+    transitions.display();
+};
+
 // Checks the transitions between all states for debugging and testing
 void transition::checkAll() {
     for(int i = 0; i < 36; i++) {
@@ -250,4 +265,6 @@ void transition::makeFile() {
         maxFile.close();
     }
     exit(0);
-};
+}
+
+

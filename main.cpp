@@ -11,11 +11,6 @@ std::string desiredString;
 std::vector<int> path;
 
 void terminalApp(){
-    std::cout << "[DBUG] BEGIN\n";
-    std::cout << "[INIT] Which connectors are active? ";
-    std::cin >> connection::activeConnectors;
-    std::cout << "[CNCT] Active connectors surrounding module: 0b" + std::bitset<6>(connection::activeConnectors).to_string() +
-            " " + connection::facesToString(connection::activeConnectors) + "\n\n";
 
     std::cout << "[INIT] Please enter the initial orientation: ";
     std::cin >> currentString;
@@ -49,9 +44,11 @@ void terminalApp(){
 
     path = transition::getTransition(currentOrientation, desiredOrientation);
     transition::printTransition(path);
+    transition::showTransition(path);
 };
 
 int main(int c, char **v) {
+    Magick::InitializeMagick(NULL);
 //    std::string str = v[1];
     if(c > 1){
         if(std::string(v[1])=="--test"){
