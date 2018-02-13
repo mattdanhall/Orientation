@@ -60,6 +60,9 @@ const int connection::maxConnectivity[36] = {
         UP | DOWN | BACK | LEFT             //CF+90
 };
 
+// Returns the number of active connectors surrounding a module
+int connection::activeConnectors = ALL;
+
 // Obtains a random number of connectors for testing etc.
 const int connection::getRandomConnectors() {
     std::random_device r;
