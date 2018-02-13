@@ -129,9 +129,9 @@ const int orientation::symmetryInversion[36][36] = {
 // Obtains a random orientation for testing etc.
 int orientation::getRandomOrientation() {
     std::random_device r;
-    srand((int) r());
-    int orient = std::rand()%31;
-    return orient;
+    std::default_random_engine e(r());
+    std::uniform_int_distribution<int> uniform_dist(1,32);
+    return uniform_dist(e);
 };
 
 // Returns a message if control inversion is required

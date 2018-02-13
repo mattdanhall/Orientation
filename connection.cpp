@@ -72,8 +72,9 @@ int connection::activeConnectors = {
 // Obtains a random number of connectors for testing etc.
 const int connection::getRandomConnectors() {
     std::random_device r;
-    srand((int) r());
-    int connectors = rand()%63;
+    std::default_random_engine e(r());
+    std::uniform_int_distribution<int> uniform_dist(1,32);
+    int connectors = uniform_dist(e);
     std::cout << "[CNCT] Active connectors surrounding module: 0b" + std::bitset<6>(connectors).to_string() +
                  " " + facesToString(connectors) + "\n\n";
     return connectors;

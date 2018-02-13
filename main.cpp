@@ -55,9 +55,7 @@ int main(int c, char **v) {
         } else if(std::string(v[1])=="--random"){
             connection::activeConnectors = connection::getRandomConnectors();
             int current = orientation::getRandomOrientation();
-            std::cout << current << "\n";
             int desired = orientation::getRandomOrientation();
-            std::cout << desired << "\n";
             path = transition::getTransition(current, desired);
             transition::textOfTransition(path);
             transition::imageOfTransition(path);
