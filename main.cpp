@@ -50,7 +50,14 @@ void terminalApp(){
 int main(int c, char **v) {
     Magick::InitializeMagick(NULL);
     if(c > 1){
-        if(std::string(v[1])=="--test"){
+        if(std::string(v[1])=="--help"){
+            std::cout << "\n/////// Welcome to the HyMod orientation suite ///////\n\nCommand\t\tAction\n"
+                      << "-------------------------------------------------------------------------------------\n"
+                      << "--test\t\tAllows the user to define the start and end orientation of the module\n"
+                      << "--random\tUses randomly generated connectivity and orientations to show paths\n"
+                      << "--define\tAllows the user to define connectivity and orientation\n"
+                      << "\n";
+        } else if(std::string(v[1])=="--test"){
             terminalApp();
         } else if(std::string(v[1])=="--random"){
             connection::activeConnectors = connection::getRandomConnectors();
@@ -59,10 +66,13 @@ int main(int c, char **v) {
             path = transition::getTransition(current, desired);
             transition::textOfTransition(path);
             transition::imageOfTransition(path);
+        } else if(std::string(v[1])=="--define"){
+            connection::activeConnectors = connection::getDefinedConnectors();
+            terminalApp();
         } else {
-            std::cout << "/////// Invalid argument provided (try --test) ///////\n";
+            std::cout << "/////// Invalid argument provided (try --help) ///////\n";
         }
     } else {
-        std::cout << "/////// No argument provided (try --test) ///////\n";
+        std::cout << "/////// No argument provided (try --help) ///////\n";
     }
 };

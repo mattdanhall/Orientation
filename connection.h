@@ -30,7 +30,7 @@ public:
     static const int maxConnectivity[36];
 
     // Returns the number of active connectors surrounding a module
-    static int activeConnectors;
+    static int activeConnectors = ALL;
 
     // Obtains a random number of connectors for testing etc.
     static const int getRandomConnectors();

@@ -205,7 +205,7 @@ void transition::imageOfTransition(std::vector<int> path) {
             connectors.read("../Images/Connectors/"+connectorName+".png");
 //            connectors.annotate(connectorName, "+0+5", Magick::SouthGravity);
             connectors.resize("40x40");
-            transitions.composite(connectors, (i*200)-20, 115, Magick::OverCompositeOp);
+            transitions.composite(connectors, (i*200)-20, 108, Magick::OverCompositeOp);
         }
     }
     transitions.font("helvetica-regular");

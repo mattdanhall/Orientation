@@ -131,7 +131,9 @@ int orientation::getRandomOrientation() {
     std::random_device r;
     std::default_random_engine e(r());
     std::uniform_int_distribution<int> uniform_dist(1,32);
-    return uniform_dist(e);
+    int orient = uniform_dist(e);
+    std::cout << "[DBUG] Randomly generated orientation: " << orientToString(orient) << "\n";
+    return orient;
 };
 
 // Returns a message if control inversion is required
