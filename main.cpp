@@ -11,15 +11,8 @@ std::string desiredString;
 std::vector<int> path;
 
 void terminalApp(){
-
     std::cout << "[INIT] Please enter the initial orientation: ";
     std::cin >> currentString;
-
-    if(currentString=="ALL"){
-        transition::checkAll();
-    }else if(currentString=="FILE"){
-        transition::makeFile();
-    }
 
     int currentOrientation = orientation::convertOrientation(currentString);
 
@@ -56,6 +49,8 @@ int main(int c, char **v) {
                       << "--test\t\tAllows the user to define the start and end orientation of the module\n"
                       << "--random\tUses randomly generated connectivity and orientations to show paths\n"
                       << "--define\tAllows the user to define connectivity and orientation\n"
+                      << "--all\t\tChecks all transition paths for a given connectivity\n"
+                      << "--file\t\tGenerates debug files of all transitions for all connections\n"
                       << "\n";
         } else if(std::string(v[1])=="--test"){
             terminalApp();
@@ -69,6 +64,11 @@ int main(int c, char **v) {
         } else if(std::string(v[1])=="--define"){
             connection::activeConnectors = connection::getDefinedConnectors();
             terminalApp();
+        } else if(std::string(v[1])=="--all"){
+            connection::activeConnectors = connection::getDefinedConnectors();
+            transition::checkAll();
+        } else if(std::string(v[1])=="--file"){
+            transition::makeFile();
         } else {
             std::cout << "/////// Invalid argument provided (try --help) ///////\n";
         }
