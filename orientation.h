@@ -10,6 +10,7 @@
 #include <bitset>
 #include <tuple>
 #include <vector>
+#include <random>
 #include "connection.h"
 
 // Global variables for the orientation states of a module
@@ -119,6 +120,9 @@ public:
 
     // Denotes whether control inversion is required following a transition
     static const int symmetryInversion[36][36];
+
+    // Obtains a random orientation for testing etc.
+    static int getRandomOrientation();
 
     // Returns a message if control inversion is required
     static bool checkSymmetry(int current, int desired);

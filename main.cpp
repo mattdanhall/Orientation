@@ -49,10 +49,18 @@ void terminalApp(){
 
 int main(int c, char **v) {
     Magick::InitializeMagick(NULL);
-//    std::string str = v[1];
     if(c > 1){
         if(std::string(v[1])=="--test"){
             terminalApp();
+        } else if(std::string(v[1])=="--random"){
+            connection::activeConnectors = connection::getRandomConnectors();
+            int current = orientation::getRandomOrientation();
+            std::cout << current << "\n";
+            int desired = orientation::getRandomOrientation();
+            std::cout << desired << "\n";
+            path = transition::getTransition(current, desired);
+            transition::textOfTransition(path);
+            transition::imageOfTransition(path);
         } else {
             std::cout << "/////// Invalid argument provided (try --test) ///////\n";
         }

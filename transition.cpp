@@ -203,9 +203,9 @@ void transition::imageOfTransition(std::vector<int> path) {
             transitions.composite(control, (i*200)-50, 50, Magick::OverCompositeOp);
             std::string connectorName = connection::facesToString(orientation::orientationTransitions[path[i-1]][path[i]]&connection::activeConnectors);
             connectors.read("../Images/Connectors/"+connectorName+".png");
-            connectors.annotate(connectorName, "+0-15", Magick::SouthGravity);
-            connectors.resize("50x50");
-            transitions.composite(connectors, (i*200)-25, 115, Magick::OverCompositeOp);
+//            connectors.annotate(connectorName, "+0+5", Magick::SouthGravity);
+            connectors.resize("40x40");
+            transitions.composite(connectors, (i*200)-20, 115, Magick::OverCompositeOp);
         }
     }
     transitions.font("helvetica-regular");

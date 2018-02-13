@@ -126,6 +126,14 @@ const int orientation::symmetryInversion[36][36] = {
         {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 };
 
+// Obtains a random orientation for testing etc.
+int orientation::getRandomOrientation() {
+    std::random_device r;
+    srand((int) r());
+    int orient = std::rand()%31;
+    return orient;
+};
+
 // Returns a message if control inversion is required
 bool orientation::checkSymmetry(int current, int desired) {
     if(symmetryInversion[current][desired]) {

@@ -4,7 +4,6 @@
 //
 
 #include <iostream>
-#include <ctime>
 #include "connection.h"
 
 // Defines all connections available for each orientation
@@ -65,14 +64,15 @@ const int connection::maxConnectivity[36] = {
 // Returns the number of active connectors surrounding a module
 int connection::activeConnectors = {
 //        BACK | DOWN
-        getRandomConnectors()
+//        getRandomConnectors()
 //        getDefinedConnectors()
 };
 
 
 // Obtains a random number of connectors for testing etc.
 const int connection::getRandomConnectors() {
-    srand((int) time(0));
+    std::random_device r;
+    srand((int) r());
     int connectors = rand()%63;
     std::cout << "[CNCT] Active connectors surrounding module: 0b" + std::bitset<6>(connectors).to_string() +
                  " " + facesToString(connectors) + "\n\n";
