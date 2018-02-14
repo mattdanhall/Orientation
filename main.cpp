@@ -6,11 +6,11 @@
 #include <iostream>
 #include "transition.h"
 
-std::string currentString;
-std::string desiredString;
 std::vector<int> path;
 
 void terminalApp(){
+    std::string currentString;
+    std::string desiredString;
     std::cout << "[INIT] Please enter the initial orientation: ";
     std::cin >> currentString;
 
@@ -36,6 +36,20 @@ void terminalApp(){
     transition::imageOfTransition(path);
 };
 
+void randomApp(){
+    while(path.empty()){
+        connection::activeConnectors = connection::getRandomConnectors();
+        int current = orientation::getRandomOrientation();
+        int desired = orientation::getRandomOrientation();
+        path = transition::getTransition(current, desired);
+        transition::textOfTransition(path);
+        if(path.empty()){
+            std::cout << "\n[DBUG] Generating new scenario\n\n";
+        }
+    }
+    transition::imageOfTransition(path);
+};
+
 int main(int c, char **v) {
     Magick::InitializeMagick(NULL);
     if(c > 1){
@@ -51,12 +65,7 @@ int main(int c, char **v) {
         } else if(std::string(v[1])=="--test"){
             terminalApp();
         } else if(std::string(v[1])=="--random"){
-            connection::activeConnectors = connection::getRandomConnectors();
-            int current = orientation::getRandomOrientation();
-            int desired = orientation::getRandomOrientation();
-            path = transition::getTransition(current, desired);
-            transition::textOfTransition(path);
-            transition::imageOfTransition(path);
+            randomApp();
         } else if(std::string(v[1])=="--define"){
             connection::activeConnectors = connection::getDefinedConnectors();
             terminalApp();
