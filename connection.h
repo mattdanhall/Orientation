@@ -7,7 +7,6 @@
 #define ORIENTATION_CONNECTION_H
 
 #include <array>
-#include <bitset>
 #include <tuple>
 #include "orientation.h"
 
@@ -25,6 +24,9 @@ enum FACES {
 
 class connection {
 public:
+
+    // Converts user input to an integer FACES
+    static const int convertConnection(const std::string &input);
 
     // Defines all connections available for each orientation
     static const int maxConnectivity[36];

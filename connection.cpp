@@ -6,6 +6,37 @@
 #include <iostream>
 #include "connection.h"
 
+// Converts user input to an integer FACES
+const int connection::convertConnection(const std::string &input) {
+    int connectors = 0;
+    if(input.find("Left") != std::string::npos) {
+        connectors = connectors|LEFT;
+    };
+    if(input.find("Right") != std::string::npos) {
+        connectors = connectors|RIGHT;
+    };
+    if(input.find("Front") != std::string::npos) {
+        connectors = connectors|FRONT;
+    };
+    if(input.find("Back") != std::string::npos) {
+        connectors = connectors|BACK;
+    };
+    if(input.find("Up") != std::string::npos) {
+        connectors = connectors|UP;
+    };
+    if(input.find("Down") != std::string::npos) {
+        connectors = connectors|DOWN;
+    };
+    if(input.find("All") != std::string::npos) {
+        connectors = connectors|ALL;
+    };
+    if(connectors==0){
+        std::cout << "[ERRR] No valid connection" << "\n";
+        exit(0);
+    };
+    return connectors;
+}
+
 // Defines all connections available for each orientation
 const int connection::maxConnectivity[36] = {
         //A
@@ -69,17 +100,15 @@ const int connection::getRandomConnectors() {
     std::default_random_engine e(r());
     std::uniform_int_distribution<int> uniform_dist(1,32);
     int connectors = uniform_dist(e);
-    std::cout << "[CNCT] Active connectors surrounding module: 0b" + std::bitset<6>(connectors).to_string() +
-                 " " + facesToString(connectors) + "\n\n";
+    std::cout << "[CNCT] Active connectors surrounding module: " + facesToString(connectors) + "\n\n";
     return connectors;
 };
 
 const int connection::getDefinedConnectors() {
-    int connectors;
+    std::string connectorString;
     std::cout << "[INIT] Which connectors are active? ";
-    std::cin >> connectors;
-    std::cout << "[CNCT] Active connectors surrounding module: 0b" + std::bitset<6>(connectors).to_string() +
-                 " " + facesToString(connectors) + "\n\n";
+    std::getline(std::cin, connectorString);
+    int connectors = convertConnection(connectorString);
     return connectors;
 }
 
