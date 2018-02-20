@@ -50,18 +50,22 @@ void randomApp(){
     transition::imageOfTransition(path);
 };
 
+void helpApp(){
+    std::cout << "\n/////// Welcome to the HyMod orientation toolkit ///////\n\nCommand\t\tAction\n"
+              << "-------------------------------------------------------------------------------------\n"
+              << "--test\t\tAllows the user to define the start and end orientation of the module\n"
+              << "--random\tUses randomly generated connectivity and orientations to show paths\n"
+              << "--define\tAllows the user to define connectivity and orientation\n"
+              << "--all\t\tChecks all transition paths for a given connectivity\n"
+              << "--file\t\tGenerates debug files of all transitions for all connections\n"
+              << "\n";
+};
+
 int main(int c, char **v) {
     Magick::InitializeMagick(NULL);
     if(c > 1){
         if(std::string(v[1])=="--help"){
-            std::cout << "\n/////// Welcome to the HyMod orientation suite ///////\n\nCommand\t\tAction\n"
-                      << "-------------------------------------------------------------------------------------\n"
-                      << "--test\t\tAllows the user to define the start and end orientation of the module\n"
-                      << "--random\tUses randomly generated connectivity and orientations to show paths\n"
-                      << "--define\tAllows the user to define connectivity and orientation\n"
-                      << "--all\t\tChecks all transition paths for a given connectivity\n"
-                      << "--file\t\tGenerates debug files of all transitions for all connections\n"
-                      << "\n";
+            helpApp();
         } else if(std::string(v[1])=="--test"){
             terminalApp();
         } else if(std::string(v[1])=="--random"){
